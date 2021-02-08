@@ -1,0 +1,2 @@
+INSERT INTO public.product(productid, productname, description, cost, createddate, updateddate, viewcount, isactive)
+	VALUES ('ccb3c70c-e067-4b95-b61e-1d8747c6f53f', 'test-product1', 'test-product1-description', '400USD', now(), null, 0, true);
