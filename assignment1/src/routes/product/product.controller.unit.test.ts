@@ -8,7 +8,7 @@ describe('product dto input validator', () => {
     productDto = new ProductDto(
       'product1',
       'some description',
-      '200USD',
+      200,
       0
     );
   });
@@ -69,17 +69,12 @@ describe('product dto input validator', () => {
     expect(error).toBeInstanceOf(BusinessError);
   });
   it('should throw validation error if cost is blank', async () => {
-    productDto.cost = '';
+    productDto.cost = null;
     let error = await exec();
     expect(error).toBeInstanceOf(BusinessError);
   });
   it('should throw validation error if cost is null', async () => {
     productDto.cost = null;
-    let error = await exec();
-    expect(error).toBeInstanceOf(BusinessError);
-  });
-  it('should throw validation error if cost is greater than 100 characters', async () => {
-    productDto.cost = new Array(110).join('a');
     let error = await exec();
     expect(error).toBeInstanceOf(BusinessError);
   });

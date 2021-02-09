@@ -20,10 +20,7 @@ export class ProductDto extends BaseValidator {
   description: string;
 
   @IsNotEmpty({ message: errorMessages.costParameterMissing })
-  @MaxLength(100, {
-    message: errorMessages.costMaxLengthExceded,
-  })
-  cost: string;
+  cost: number;
 
   @IsOptional()
   viewCount: number;
@@ -34,7 +31,7 @@ export class ProductDto extends BaseValidator {
   constructor(
     productName: string,
     description: string,
-    cost: string,
+    cost: number,
     viewCount: number
   ) {
     super();

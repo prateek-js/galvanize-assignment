@@ -9,7 +9,7 @@ create table product
     productid uuid not null primary key,
     productname varchar(1000) not null,
     description varchar(4000) null,
-    cost varchar(100) null,
+    cost numeric(10,2) not null,
     viewcount int null,
     createddate timestamp with time zone not null,
     updateddate timestamp with time zone null,

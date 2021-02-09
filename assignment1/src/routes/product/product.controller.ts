@@ -34,8 +34,8 @@ import { BusinessError } from '../../middleware/error';
  *               type: string
  *               example: product description
  *             cost:
- *               type: string
- *               example: 400USD
+ *               type: number
+ *               example: 400
  *     responses:
  *       200:
  *         description: product created successfully
@@ -88,6 +88,11 @@ productControllerRouter.post(
  *         schema:
  *           type: string
  *           example: 552fffa1-9df7-41d9-acca-5fef29a83830
+ *       - in: query
+ *         name: currency
+ *         schema:
+ *           type: string
+ *         description: type of currency
  *     responses:
  *       200:
  *         description: details of the given product
@@ -110,8 +115,8 @@ productControllerRouter.post(
  *                         type: string
  *                         example: product description
  *                       cost:
- *                         type: string
- *                         example: 400USD
+ *                         type: number
+ *                         example: 400
  *                       viewCount:
  *                         type: number
  *                         example: 2
@@ -132,8 +137,9 @@ productControllerRouter.get(
   '/:productid',
   async function (req, res) {
     const ps = new ProductService();
+    let queryParams = req.query;
     let productId = req.params['productid'];
-    let product = await ps.getProduct(productId);
+    let product = await ps.getProduct(productId, queryParams);
     res.status(statusCodes.SUCESSS).json(
       new ResponseMessage(sucessMessages.productFetched, {
         product: product,
@@ -147,11 +153,22 @@ productControllerRouter.get(
  *
  * /api/v1/product:
  *   get:
- *     description: get all the products
+ *     description: get most viewed products
  *     produces:
  *       - application/json
  *     tags:
  *       - product
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: The numbers of items to return
+ *       - in: query
+ *         name: currency
+ *         schema:
+ *           type: string
+ *         description: type of currency
  *     responses:
  *       200:
  *         description: list of products
@@ -176,8 +193,8 @@ productControllerRouter.get(
  *                           type: string
  *                           example: product description
  *                         cost:
- *                           type: string
- *                           example: 400USD
+ *                           type: number
+ *                           example: 400
  *                         viewCount:
  *                           type: number
  *                           example: 2
@@ -197,8 +214,9 @@ productControllerRouter.get(
 productControllerRouter.get(
   '/',
   async function (req, res) {
+    let queryParams = req.query;
     const ts = new ProductService();
-    let products = await ts.getProducts();
+    let products = await ts.getProducts(queryParams);
     res.status(statusCodes.SUCESSS).json(
       new ResponseMessage(sucessMessages.productFetched, {
         products: products,

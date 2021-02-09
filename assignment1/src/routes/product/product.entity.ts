@@ -13,8 +13,8 @@ export class Product extends BaseEntity {
   @Column({ name: 'description' })
   public description: string;
 
-  @Column({ name: 'cost' })
-  public cost: string;
+  @Column({ name: 'cost' , nullable: false, type: 'numeric', precision: 10, scale: 2, default: 0.0})
+  public cost: number;
 
   @Column({ name: 'viewcount' })
   public viewCount: number;
