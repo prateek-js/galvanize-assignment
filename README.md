@@ -1,7 +1,7 @@
 Repo contains asssignment solution
 
 Assignment 1 is api assignment
-Assignment 2 is system design asssignment
+Assignment 2 is system design asssignment using draw.io
 
 
 Tech Stack used for Assignment 1:-
