@@ -28,22 +28,6 @@ export class ProductService {
     return productDto;
   }
 
-  async validateProductExists(
-    productName: string
-  ): Promise<void> {
-    const productRepository = this.connection.getRepository(Product);
-    let productCount = await productRepository.count({
-      productName: productName,
-    });
-
-    if (productCount !== 0) {
-      throw new BusinessError(
-        statusCodes.BADREQUEST,
-        constants.productNameExists
-      );
-    }
-  }
-
   async createProduct(
     productDto: ProductDto
   ): Promise<void> {

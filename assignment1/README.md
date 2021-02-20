@@ -21,3 +21,4 @@ Schema is created.
 9. access Swagger at "http://localhost:8100/swagger". port as given in default.json under config folder.
 10. All api's can be accessed via swagger
 11. To run unit test case -> npm test. 
+12. npm test will give coverage of all the files
