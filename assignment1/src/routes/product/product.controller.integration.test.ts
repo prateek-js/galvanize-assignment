@@ -43,16 +43,6 @@ describe('POST Create product api', () => {
 
     afterEach(async () => {
       console.log('after each');
-    //   let product = await productRepository.findOne({
-    //     productName: 'Integration Test Product',
-    //     description: 'product description',
-    //     cost: 300,
-    //     isActive: true,
-    //   });
-    //   if (product) {
-    //     product.isActive = false;
-    //     await productRepository.delete({productId: product.productId});
-    //   }
       jest.resetAllMocks();
     });
 
@@ -67,39 +57,6 @@ describe('POST Create product api', () => {
         expect(responseUpdate.statusCode).toBe(400);
     });
   });
-
-describe('Get products api', () => {
-  const exec = async () => {
-    var getRequest = request(app).post('/api/v1/product');
-    return await getRequest;
-  };
-
-  beforeAll(async () => {
-    console.log('beforeall');
-    dbConnection = await require('..//..//startup/db')();
-    productRepository = dbConnection.getRepository(Product);
-  }, 30000);
-
-  afterAll(async () => {
-    console.log('afterall');
-    dbConnection.close();
-  }, 30000);
-
-  beforeEach(() => {
-    console.log('before each');
-  });
-  afterEach(async () => {
-    console.log('after each');
-    jest.resetAllMocks();
-  });
-
-//   it('it should return only active products', async () => {
-//     const response = await exec();
-//     let activeCount = await productRepository.findOne({ isActive: true });
-//     expect(response.statusCode).toBe(200);
-//     expect(response.body.data.products).toHaveLength(activeCount);
-//   });
-});
 
 describe('Get a product api', () => {
     let product: any = null;
@@ -146,6 +103,43 @@ describe('Get a product api', () => {
     expect(response.body.data.product.productId).toEqual(
         product.productId
     );
+  });
+});
+
+describe('Get list of products api', () => {
+  const exec = async () => {
+    var getRequest = request(app).get('/api/v1/product');
+    return await getRequest;
+  };
+
+  beforeAll(async () => {
+    console.log('beforeall');
+    dbConnection = await require('..//..//startup/db')();
+    productRepository = dbConnection.getRepository(Product);
+  }, 30000);
+
+  afterAll(async () => {
+    console.log('afterall');
+    dbConnection.close();
+  }, 30000);
+
+  beforeEach(() => {
+    console.log('before each');
+  });
+  afterEach(async () => {
+    console.log('after each');
+    jest.resetAllMocks();
+  });
+
+  it('it should return only active products', async () => {
+    const response = await exec();
+    let resultProducts = await productRepository.find({ isActive: true });
+    let activeCount = resultProducts.filter((function (e) {
+        return e.viewCount >= 1 ;
+      })
+    );
+    expect(response.statusCode).toBe(200);
+    expect(response.body.data.products).toHaveLength(activeCount.length);
   });
 });
 
